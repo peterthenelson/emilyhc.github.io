@@ -2,69 +2,60 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nature Scrollytelling</title>
+    <title>Emily Hansell Clark</title>
     <style>
-      /* --- Reset & Base Styles --- */
+      /* Defaults */
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
-
       body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: 'EB Garamond', 'Crimson Text', 'Garamond', serif;
         background-color: #000;
       }
-
-      /* --- typography --- */
       h1 {
-        font-size: 3.75rem; /* ~text-6xl */
+        font-size: 3.75rem;
         font-weight: 700;
         margin-bottom: 1rem;
         line-height: 1.1;
       }
-
       h2 {
-        font-size: 2.25rem; /* ~text-4xl */
+        font-size: 2.25rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
       }
-
-      p.lead {
-        font-size: 1.25rem; /* ~text-xl */
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
       }
 
-      p.body {
-        font-size: 1.125rem; /* ~text-lg */
-        line-height: 1.75;
-      }
-
-      .text-center { text-align: center; }
-      .text-white { color: #fff; }
-      .drop-shadow { text-shadow: 0 4px 6px rgba(0,0,0,0.5); }
-      .text-balance { text-wrap: balance; }
-
-      /* --- Layout: The Stacked Grid --- */
+      /* Stacked grid layout */
       .stack-container {
         display: grid;
         grid-template-columns: 1fr;
         width: 100%;
-        min-height: 100vh;
+        height: 100vh;
       }
-
       .layer {
-        /* This stacks the layers on top of each other */
         grid-area: 1 / 1;
         display: flex;
         flex-direction: column;
       }
-
-      /* --- Background Layer --- */
+      .foreground-layer {
+        z-index: 2;
+      }
       .background-layer {
         z-index: 1;
       }
 
+      /* Background elements */
       .bg-image {
         position: sticky;
         top: 0;
@@ -74,7 +65,6 @@
         background-position: center;
         background-repeat: no-repeat;
       }
-
       .bg-spacer {
         /* These empty spacers allow the foreground 'solid' sections 
           to scroll past without dragging the sticky image with them immediately */
@@ -82,122 +72,317 @@
         background: #000; /* Color doesn't matter, it's covered by foreground */
       }
 
-      /* --- Foreground Layer --- */
-      .foreground-layer {
-        z-index: 2;
-      }
-
-      /* Helper for flexible centering */
-      .section-center {
+      /* Image foreground elements */
+      .section-transparent {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
+        height: 100vh;
+      }
+      .section-transparent h1, .section-transparent h2 {
+        text-align: center;
+        color: #fff;
+        text-shadow: 0 4px 6px rgba(0,0,0,0.7);
+        text-wrap: balance;
+      }
+      .section-transparent .lead {
+        font-size: 1.25rem;
+        color: #fff;
+        text-align: center;
+        text-wrap: balance;
       }
 
-      /* Transparent sections allow the background layer to be seen */
-      .section-transparent {
-        min-height: 100vh;
-        /* No background color here! */
-      }
-
-      /* Solid sections cover the background layer */
+      /* Solid foreground elements */
       .section-solid {
-        min-height: 100vh;
+        background-color: #fdfff2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
         padding: 2rem;
       }
-
       .content-box {
-        max-width: 48rem; /* ~3xl */
+        max-width: 48rem;
         padding: 0 1.5rem;
+        font-size: 1.125rem;
+        line-height: 1.75;
+        text-align: left;
+        color: #2b2e23;
+      }
+      .section-solid h1, h2 {
+        text-align: center;
+        color: #22241c;
+        text-wrap: balance;
       }
 
-      /* --- Section Colors --- */
-      .bg-slate { background-color: #0f172a; } /* slate-900 */
-      .text-slate-light { color: #cbd5e1; }   /* slate-300 */
-
-      .bg-blue { background-color: #1e3a8a; }   /* blue-900 */
-      .text-blue-light { color: #dbeafe; }     /* blue-100 */
-
-      .bg-green { background-color: #14532d; }  /* green-900 */
-      .text-green-light { color: #dcfce7; }    /* green-100 */
-
-      .bg-final { height: 50vh; }
-
+      /* Annoying fiddly height fixes for differently sized sections */
+      .bio { height: 130vh; }
+      .research { height: 110vh; }
+      .publications { height: 215vh; }
+      .media { height: 70vh; }
+      .contact { height: 60vh; }
     </style>
   </head>
   <body>
-
     <div class="stack-container">
-      
       <div class="layer background-layer">
-        <div class="bg-image" style="background-image: url('https://placehold.co/1920x1080/8a75bf/dad7e0?text=mountain');"></div>
-        <div class="bg-image" style="background-image: url('https://placehold.co/1920x1080/91b2c4/f5f5f5?text=ocean');"></div>
-        <div class="bg-spacer"></div>
-        <div class="bg-image" style="background-image: url('https://placehold.co/1920x1080/0a6121/8f826b?text=forest');"></div>
-        <div class="bg-spacer"></div>
-        <div class="bg-image" style="background-image: url('https://placehold.co/1920x1080/black/black?text=...');"></div>
+        <div class="bg-image" style="background-image: url('./vogelconcert_1.jpg');"></div>
+        <div class="bg-image" style="background-image: url('./vogelconcert_2.jpg');"></div>
+        <div class="bio bg-spacer"></div>
+        <div class="bg-image" style="background-image: url('./vogelconcert_3.jpg');"></div>
+        <div class="research bg-spacer"></div>
+        <div class="bg-image" style="background-image: url('./vogelconcert_4.jpg');"></div>
+        <div class="publications bg-spacer"></div>
+        <div class="bg-image" style="background-image: url('./vogelconcert_5.jpg');"></div>
+        <div class="media bg-spacer"></div>
+        <div class="bg-image" style="background-image: url('./vogelconcert_6.jpg');"></div>
+        <div class="contact bg-spacer"></div>
       </div>
-
       <div class="layer foreground-layer">
-
-        <section class="section-transparent section-center">
-          <div class="text-center text-white drop-shadow">
-            <h1 class="text-balance">Mountain Views</h1>
-            <p class="lead">Scroll to explore different landscapes</p>
+        <section class="section-transparent">
+          <div>
+            <h1>Emily Hansell Clark</h1>
+            <p class="lead">Assistant Professor of Contested Archives,</p>
+            <p class="lead">Media and Memory at the University of Amsterdam</p>
           </div>
         </section>
-
-        <section class="section-solid section-center bg-slate text-white">
-          <div class="content-box text-center">
-            <h2 class="text-balance">Discover Nature's Beauty</h2>
-            <p class="body text-slate-light">
-              Experience breathtaking landscapes from around the world. Each section reveals a new vista, creating an
-              immersive journey through stunning natural environments.
+        <section class="bio section-solid">
+          <div class="content-box">
+            <h2>Bio</h2>
+            <p>
+              TODO: Add picture
+            </p>
+            <br>
+            <p>
+              An ethnomusicologist by training, I teach and conduct research at
+              UvA’s Department of Media Studies and Amsterdam School for Heritage,
+              Memory and Material Culture (AHM). My research focuses on music, migration
+              and Dutch colonial history. Broadly, I am interested in how music and sound
+              shape experiences of self and other (in other words: who am I, what makes
+              me human and connects me to other humans, and how do I relate to the human
+              and nonhuman others with whom I share the world). My PhD research traced
+              musical and sonic practices from Indonesia to Suriname and the Netherlands.
+              My current research project, Audibilities of the Colonial Past, investigates
+              ethnographic sound archives in the Netherlands within the framework of
+              modernity/coloniality (referencing the work of Aníbal Quijano and Walter
+              Mignolo) and traces ways of thinking about music, sound, data and human
+              difference from the colonial past to the present.
+            </p>
+            <br>
+            <p>
+              My teaching has covered a wide variety of topics, from music to archives
+              to ethnographic film to AI and creativity; and I supervise theses in UvA’s
+              Masters programs in Archival and Information Studies, Film Studies, and
+              Preservation and Presentation of the Moving Image (all within the Department
+              of Media Studies). Across my teaching activities, I aim to foster critical
+              thinking about how the perceptions and ideas that shape our meaningful
+              experiences—such as practices of listening and notions of difference, culture,
+              creativity, identity, technology, and the past—are subjective, contingent,
+              and historically formed.
+            </p>
+            <br>
+            <p>
+              I studied ethnomusicology at Columbia University (PhD, 2020) and information
+              studies at the University of Texas at Austin’s School of Information (MSIS,
+              2011). Before that, I studied anthropology and music composition at Oberlin
+              College and Conservatory (BA, 2007).
             </p>
           </div>
         </section>
-
-        <section class="section-transparent section-center">
-          <div class="text-center text-white drop-shadow">
-            <h1 class="text-balance">Ocean Depths</h1>
-            <p class="lead">Dive into the blue</p>
-          </div>
-        </section>
-
-        <section class="section-solid section-center bg-blue text-white">
-          <div class="content-box text-center">
-            <h2 class="text-balance">The Call of the Sea</h2>
-            <p class="body text-blue-light">
-              Vast oceans cover our planet, hiding mysteries beneath their waves. The rhythmic motion of water creates a
-              sense of peace and endless possibility.
+        <section class="section-transparent "></section>
+        <section class="research section-solid">
+          <div class="content-box">
+            <h2>Research</h2>
+            <p>
+              Since the invention of portable sound recording technologies around
+              the turn of the 20th century, sonic specimens have been collected
+              from “the field” and used as a source of knowledge to attempt to
+              answer big questions about human difference, the origins of creativity,
+              and the nature of humanity. Early 20th-century musicologists traversed
+              colonial empires and the European countryside, collecting sonic data
+              and imagining a vast archive of sound recordings big enough to provide
+              the empirical evidence to answer such profound questions. In the present
+              age of digitization and datafication, the imaginary of a very big archive
+              of sonic data can potentially be realized; but, given more recent
+              critical reflections on colonial archives, data collection, and
+              knowledge production, have modes of understanding the relationship
+              between sound, evidence, and human difference changed as well? What
+              kind of evidence can historical sound recording collections provide
+              for different kinds of users and purposes today—including critical
+              scholarship, restitution and reparation, and artistic reappropriation?
+            </p>
+            <br>
+            <p>
+              <i>Audibilities of the Colonial Past: Dutch Sound Archives as History,
+              Heritage and Data</i> is a four-year research project (2023-28) funded
+              by the Dutch Research Council (NWO). In this project, I conduct
+              historical research into three case studies of ethnographic sound
+              recording collections from the context of Dutch colonial science and
+              connect this history to a variety of contemporary practices of producing
+              knowledge from recorded sound.
             </p>
           </div>
         </section>
-
-        <section class="section-transparent section-center">
-          <div class="text-center text-white drop-shadow">
-            <h1 class="text-balance">Forest Serenity</h1>
-            <p class="lead">Find peace among the trees</p>
+        <section class="section-transparent">
+        </section>
+        <section class="publications section-solid">
+          <div class="content-box">
+            <h2>Publications</h2>
+            <h3>2025</h3>
+            <ul>
+              <li>
+                Clark, E. H. (2025). Rethinking colonial sound recording collections:
+                the case of Pratinada. <i>Yearbook for Traditional Music</i>, 56(2),
+                271-275. (<a href="https://doi.org/10.1017/ytm.2025.10027">link</a>)
+              </li>
+              <li>
+                Olesen, C. G., Noordegraaf, J. J., & Clark, E. H. (2025).
+                Introduction to Section Digital Heritage. In I. Saloul, & B.
+                Baillie (Eds.), <i>The Palgrave Encyclopedia of Cultural Heritage
+                and Conflict</i> (pp. 1-4). Palgrave Macmillan. Advance online
+                publication.
+                (<a href="https://doi.org/10.1007/978-3-030-61493-5_295-1">link</a>)
+              </li>
+            </ul>
+            <h3>2024</h3>
+            <ul>
+              <li>
+                Clark, E. H. (2024). How AI Hears Musical Difference: A
+                Critical Epistemological Approach to AI-Generated ‘Traditional’ and
+                ‘World’ Music. In B. Sturm, E. Kanhov, & A. Holzapfel (Eds.),
+                <i>Collected Materials of The First International Conference in AI
+                Music Studies: Prospects, Challenges and Methodologies of Studying
+                AI Music in the Humanities and Social Sciences</i> The Royal
+                Institute of Technology (KTH).
+                (<a href="https://boblsturm.github.io/aimusicstudies2024/">link</a>)
+              </li>
+              <li>
+                Clark, E. H. (2024). Voices and Bodies in the Archive: The Case
+                of Colonial Audiovisual Media Heritage. <i>MUSEA. Journal for
+                museology, museum practice and audience</i>, 1(2), 160-178.
+                (<a href="https://doi.org/10.25364/32.1:2024.2.9">link</a>)
+              </li>
+            </ul>
+            <h3>2023</h3>
+            <ul>
+              <li>
+                Badenoch, A., Clark, E.H., & Jancovic, M. (2023). Re-bordering
+                the Archive: European Transnational Archives and Transnational
+                Entanglements. <i>VIEW Journal of European Television History and
+                Culture</i>, 12(24), 1-10.
+                (<a href="https://doi.org/10.18146/view.326">link</a>)
+              </li>
+              <li>
+                  Clark, E. H. (2023). Archival Optimism and Archival Pessimism:
+                The Case of Javanese-Surinamese Diasporic Heritage in the
+                Netherlands. In <i>AHM Conference 2023: Diasporic Heritage and
+                Identity</i> (Vol. 2, pp. 31-38). Amsterdam University Press.
+                (<a href="https://doi.org/10.5117/978904856222/AHM.2023.004">link</a>)
+              </li>
+              <li>
+                Badenoch, A., Clark, E. H., & Jancovic, M., eds. (2023).
+                Special Issue: Re-bordering the Archive. <i>VIEW Journal of
+                European Television History and Culture</i>, 12(24).
+              </li>
+            </ul>
+            <h3>2022</h3>
+            <ul>
+              <li>
+                Clark, E. H. (2022). A Postcolonial MIR? <i>Resonance: The
+                Journal of Sound and Culture</i>, 3(4).
+              </li>
+            </ul>
+            <h3>2021</h3>
+            <ul>
+              <li>
+                Clark, E. H. (2021). "So Nicely in Harmony with the Tropical
+                Nature": Listening to the Cultural and the Natural in Suriname,
+                1883-2020. <i>The World of Music</i>, 10(2).
+              </li>
+              <li>
+                Clark, E. H. (2021). Audibilities of Colonialism and
+                Extractivism. <i>The World of Music</i>, 10(2).
+              </li>
+              <li>
+                Clark, E. H. (2021). Introduction: Audibilities of Colonialism
+                and Extractivism. <i>World of Music</i>, 10(2), 5-20.
+                (<a href="https://www.jstor.org/stable/27095336">link</a>)
+              </li>
+            </ul>
+            <h3>2019</h3>
+            <ul>
+              <li>
+                Clark, E. H. (2019.) Review of <i>Departing from Java: Javanese
+                Labour, Migration and Diaspora</i>, ed. Rosemarijn Hoefte and Peter
+                Meel. <i>Bijdragen tot de Taal, Land- en Volkenkunde (Journal of
+                the Humanities and Social Sciences of Southeast Asia)</i> 175:1,
+                Spring.
+              </li>
+            </ul>
+            <h3>2018</h3>
+            <ul>
+              <li>
+                Clark, E. H. (2018.) Review of <i>Kwaito's Promise: Music and
+                the Aesthetics of Freedom in South Africa</i>, Gavin Steingo.
+                <i>Current Musicology</i> 102, Spring.
+              </li>
+            </ul>
           </div>
         </section>
-
-        <section class="section-solid section-center bg-green text-white">
-          <div class="content-box text-center">
-            <h2 class="text-balance">Into the Woods</h2>
-            <p class="body text-green-light">
-              Ancient forests stand as guardians of biodiversity, offering shelter and sustenance to countless species
-              while purifying the air we breathe.
+        <section class="section-transparent"></section>
+        <section class="media section-solid">
+          <div class="content-box">
+            <h2>Online Media</h2>
+            <ul>
+              <li>
+                “Musical Difference: Computational and Postcolonial Perspectives,”
+                CODAMUS series (Computational and Digital Approaches to Music
+                Scholarship), Universität Würzburg, 25 October 2023.
+                (<a href="https://codamus.pubpub.org/pub/2023-clarke/release/2">link</a>)
+              </li>
+              <li>
+                “‘Revolution or Bersiap?’ Negotiating social debates and language
+                shift in archives,” National Institute for Sound and Vision research
+                blog, 3 Feburary 2022.
+                (<a href="https://www.beeldengeluid.nl/en/research/blog/revolution-or-bersiap-negotiating-social-debates-and-language-shift-archives">link</a>)
+              </li>
+              <li>
+                "The Javanese Gamelan in Suriname," Nusantara Arts Gamelan Masters
+                Series, online lecture via Zoom, 19 July 2020.
+                (<a href="https://youtu.be/cOMOxozpkqo">link</a>)
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section class="section-transparent "></section>
+        <section class="contact section-solid">
+          <div class="content-box">
+            <h2>Contact</h2>
+            <p>
+              Please get in touch to discuss potential research collaborations,
+              supervision opportunities, or to request a digital copy of any
+              published research that is not available open access.
+            </p>
+            <br>
+            <p>Email: e.h.clark [at] uva.nl</p>
+          </div>
+        </section>
+        <section class="section-transparent"></section>
+        <section class="section-solid">
+          <div class="content-box">
+            <h2>About this Website</h2>
+            <p>
+              The images are of 17th-century Dutch paintings in the genre known
+              as the “bird concert” (<i>vogelconcert</i>). Depicting groups of
+              birds from different climates gathered together to sing Western
+              harmonies from a notated score, this painting tradition touches on
+              themes of culture and nature, sound and listening, difference and
+              coloniality, and representation.
             </p>
           </div>
         </section>
-
-        <section class="section-transparent section-center bg-final">
-          <div class="text-center text-white drop-shadow">
-            <p class="lead text-balance">The journey continues...</p>
-          </div>
-        </section>
-
       </div>
     </div>
   </body>
